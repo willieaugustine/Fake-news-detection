@@ -1,5 +1,8 @@
 import tweepy
 import pandas as pd
+import nltk
+import re
+
 
 consumer_key = 'Ncq55A71gRVigy6mXZ7JTq4kC'
 consumer_secret = 'Tz0MChm2q7Dt6rTOES9NWIV0xIBTJqLvmcJOVygu5B9hEyP7EP'
@@ -15,3 +18,12 @@ def fetch_tweets(query, count=100):
     return pd.DataFrame(tweet_list, columns=['tweet'])
 data = fetch_tweets('COVID-19 vaccine', count=200)
 print(data.head())
+
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+nltk.download('punkt')
+nltk.download('stopwords')
+def preprocess_text(text):
+    text = re.sub(r'http\S+', '', text)
+    text = re.sub(r'@\w+', '', text)
+   
