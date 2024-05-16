@@ -26,4 +26,11 @@ nltk.download('stopwords')
 def preprocess_text(text):
     text = re.sub(r'http\S+', '', text)
     text = re.sub(r'@\w+', '', text)
- 
+    text = re.sub(r'#\w+', '', text)
+    text = re.sub(r'[^\w\s]', '', text)
+    text = text.lower()
+    words = word_tokenize(text)
+    words = [word for word in words if word not in stopwords.words('english')]
+    return ''.join(words)
+data['cleaned_tweet'] = data['tweet'].apply(preprocess_text)
+print(data.head)
